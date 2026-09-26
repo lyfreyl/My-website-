@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Anamnesis</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(180deg, #f8dce8, #fff6f9);
+            color: #59404a;
+            font-family: "Poppins", sans-serif;
+            overflow-x: hidden;
+        }
+
+        .heart {
+            position: fixed;
+            bottom: -40px;
+            font-size: 20px;
+            opacity: 0;
+            pointer-events: none;
+            animation: floatUp 7s linear infinite;
+            z-index: 1;
+        }
+
+        .heart:nth-child(1) {
+            left: 10%;
+        }
+
+        .heart:nth-child(2) {
+            left: 35%;
+            animation-delay: 2s;
+        }
+
+        .heart:nth-child(3) {
+            left: 65%;
+            animation-delay: 4s;
+        }
+
+        .heart:nth-child(4) {
+            left: 85%;
+            animation-delay: 1s;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: translateY(-110vh);
+                opacity: 0;
+            }
+        }
+
+        #question {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+        }
+
+        #question h1 {
+            font-family: "Caveat", cursive;
+            font-size: 45px;
+            font-weight: 600;
+            color: #d94f82;
+            margin-bottom: 30px;
+        }
+
+        button {
+            border: none;
+            border-radius: 30px;
+            padding: 13px 28px;
+            margin: 7px;
+            font-family: "Poppins", sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #yesBtn {
+            background: #d94f82;
+            color: white;
+            box-shadow: 0 8px 20px rgba(217, 79, 130, 0.25);
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.08);
+        }
+
+        #noBtn {
+            background: white;
+            color: #d94f82;
+        }
+
+        #message {
+            color: #d94f82;
+            min-height: 25px;
+            font-size: 14px;
+        }
+
+        #memories {
+            display: none;
+            padding: 55px 20px;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 70px;
+            animation: titleAppear 1.2s ease;
+        }
+
+        .title h1 {
+            font-family: "Caveat", cursive;
+            font-size: 65px;
+            font-weight: 600;
+            color: #d94f82;
+            margin: 0;
+        }
+
+        .title p {
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: #98717f;
+            margin-top: 5px;
+        }
+
+        .memory {
+            max-width: 430px;
+            margin: 0 auto 110px;
+            opacity: 0;
+            transform: translateY(70px);
+            animation: memoryAppear 1.2s ease forwards;
+        }
+
+        .memory:nth-of-type(2) {
+            animation-delay: 0.3s;
+        }
+
+        .memory:nth-of-type(3) {
+            animation-delay: 0.6s;
+        }
+
+        .memory:nth-of-type(4) {
+            animation-delay: 0.9s;
+        }
+
+        .photo {
+            background: #ffffff;
+            padding: 10px 10px 35px;
+            border-radius: 10px;
+            box-shadow: 0 15px 40px rgba(90, 50, 70, 0.16);
+            transform: rotate(-2deg);
+            transition: 0.5s ease;
+        }
+
+        .memory:nth-of-type(3) .photo {
+            transform: rotate(2deg);
+        }
+
+        .memory:nth-of-type(4) .photo {
+            transform: rotate(-1deg);
+        }
+
+        .photo:hover {
+            transform: rotate(0deg) scale(1.03);
+        }
+
+        .photo img {
+            display: block;
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .caption {
+            text-align: center;
+            font-family: "Caveat", cursive;
+            font-size: 30px;
+            color: #d94f82;
+            margin-top: 18px;
+        }
+
+        @keyframes titleAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-35px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes memoryAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="heart">♡</div>
+    <div class="heart">♡</div>
+    <div class="heart">♡</div>
+    <div class="heart">♡</div>
+
+
+    <div id="question">
+
+        <h1>Do you wanna see our memories?</h1>
+
+        <div>
+            <button id="yesBtn" onclick="showMemories()">YES</button>
+            <button id="noBtn" onclick="noClicked()">NO</button>
+        </div>
+
+        <p id="message"></p>
+
+    </div>
+
+
+    <div id="memories">
+
+        <div class="title">
+            <h1>Anamnesis</h1>
+            <p>FRAGMENTS OF MOMENTS ONCE LIVED</p>
+        </div>
+
+
+        <div class="memory">
+
+            <div class="photo">
+                <img src="https://i.ibb.co/8D4fQ9WW/IMG-20260906-101604.png">
+            </div>
+
+            <div class="caption">
+                Where it began
+            </div>
+
+        </div>
+
+
+        <div class="memory">
+
+            <div class="photo">
+                <img src="https://i.ibb.co/Qjf9vh7j/IMG-20260906-101630.png">
+            </div>
+
+            <div class="caption">
+                A moment worth keeping
+            </div>
+
+        </div>
+
+
+        <div class="memory">
+
+            <div class="photo">
+                <img src="https://i.ibb.co/XZw41Lrk/IMG-20260906-101618.png">
+            </div>
+
+            <div class="caption">
+                A moment in time
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        let noCount = 0;
+
+        function noClicked() {
+
+            noCount++;
+
+            const messages = [
+                "Are you sure?",
+                "Really?",
+                "Think again.",
+                "Perhaps another choice.",
+                "The memories are waiting.",
+                "One more time?",
+                "Are you certain?"
+            ];
+
+            document.getElementById("message").innerText =
+                messages[Math.min(noCount - 1, messages.length - 1)];
+        }
+
+
+        function showMemories() {
+
+            document.getElementById("question").style.display = "none";
+
+            document.getElementById("memories").style.display = "block";
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+    </script>
+
+</body>
+</html>
